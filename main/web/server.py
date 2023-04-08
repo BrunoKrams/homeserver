@@ -1,6 +1,6 @@
 from flask import Flask
 
-from main.business.energymonitor.energy_monitor_service import EnergymonitorService
+from main.business.energymonitor.energymonitor_service import EnergymonitorService
 from main.business.lightswitch.lightswitch_service import LightswitchService
 
 
@@ -48,7 +48,3 @@ class Server:
     def run(self, **kwargs):
         self.app.run(**kwargs)
 
-
-if __name__ == "__main__":
-    server = Server(LightswitchService(), EnergymonitorService())
-    server.run()

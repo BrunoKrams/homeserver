@@ -1,7 +1,7 @@
 import unittest
 from unittest.mock import MagicMock
 
-from main.business.energymonitor.energy_monitor_service import EnergymonitorService
+from main.business.energymonitor.energymonitor_service import EnergymonitorService
 from main.business.lightswitch.lightswitch_service import LightswitchService
 from main.web.server import Server
 
