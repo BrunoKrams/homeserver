@@ -1,4 +1,4 @@
-class EnergyMonitorService:
+class EnergymonitorService:
 
     def start(self):
         pass

@@ -1,12 +1,12 @@
 from flask import Flask
 
-from business.energymonitor.energy_monitor_service import EnergyMonitorService
+from business.energymonitor.energy_monitor_service import EnergymonitorService
 from business.lightswitch.lightswitch_service import LightswitchService
 
 server = Flask(__name__, static_url_path='', static_folder='web')
 
 lightswitch_service = LightswitchService()
-energy_monitor_service = EnergyMonitorService()
+energy_monitor_service = EnergymonitorService()
 
 @server.route("/")
 def index():
