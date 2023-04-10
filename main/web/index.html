@@ -38,6 +38,17 @@ lightswitch.addEventListener('click', function() {
         fetch('/lightswitch/on', {method: 'POST'});
     }
 });
+function updateLightswitchStatus() {
+  fetch('/lightswitch', {
+      method: 'GET'
+    })
+    .then((response) => response.text()
+      .then((text) => lightswitch.checked = text == 'ON')
+    );
+}
+updateLightSwitchStatus();
+setInterval(updateLightswitchStatus, 2000);
+
 
 var energymonitor = document.getElementById('flexSwitchEnergymonitor');
 energymonitor.addEventListener('click', function() {
@@ -47,17 +58,16 @@ energymonitor.addEventListener('click', function() {
         fetch('/energymonitor/stop', {method: 'POST'});
     }
 });
-
-setInterval(updateLightswitchStatus, 2000);
-
-function updateLightswitchStatus() {
-  fetch('/lightswitch', {
+function updateEnergymonitorStatus() {
+  fetch('/energymonitor', {
       method: 'GET'
     })
     .then((response) => response.text()
-      .then((text) => lightswitch.checked = text == 'ON')
+      .then((text) => energymonitor.checked = text == 'ON')
     );
 }
+updateEnergymonitorStatus();
+setInterval(updateEnergymonitorStatus, 2000);
 </script>
 </body>
 </html>
