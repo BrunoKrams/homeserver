@@ -1,7 +1,7 @@
 class LightswitchService:
 
     def __init__(self):
-        self.is_on = self.status()
+        self.is_on = True
 
     def status(self) -> bool:
         return self.is_on

@@ -1,6 +1,6 @@
 import sched
 
-from main.business.energymonitor.logic import MainCommand, Display, DataAdapter
+from main.business.energymonitor.logic import DataAdapter, Display, MainCommand
 
 
 class EnergymonitorService:
