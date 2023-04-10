@@ -10,7 +10,7 @@ class ServerTest(unittest.TestCase):
 
     def test_index(self):
         # given
-        server = Server(LightswitchService(), EnergymonitorService())
+        server = Server(LightswitchService(), self.__create_energymonitor_service())
 
         # when
         response = server.app.test_client().get('/')
@@ -24,7 +24,7 @@ class ServerTest(unittest.TestCase):
         # given
         lightswitch_service = LightswitchService()
         lightswitch_service.status = MagicMock()
-        server = Server(lightswitch_service, EnergymonitorService())
+        server = Server(lightswitch_service, self.__create_energymonitor_service())
 
         # when
         response = server.app.test_client().get('/lightswitch')
@@ -37,7 +37,7 @@ class ServerTest(unittest.TestCase):
         # given
         lightswitch_service = LightswitchService()
         lightswitch_service.on = MagicMock()
-        server = Server(lightswitch_service, EnergymonitorService())
+        server = Server(lightswitch_service, self.__create_energymonitor_service())
 
         # when
         response = server.app.test_client().post('/lightswitch/on')
@@ -50,7 +50,7 @@ class ServerTest(unittest.TestCase):
         # given
         lightswitch_service = LightswitchService()
         lightswitch_service.off = MagicMock()
-        server = Server(lightswitch_service, EnergymonitorService())
+        server = Server(lightswitch_service, self.__create_energymonitor_service())
 
         # when
         response = server.app.test_client().post('/lightswitch/off')
@@ -61,7 +61,7 @@ class ServerTest(unittest.TestCase):
 
     def test_energy_monitor_start(self):
         # given
-        energy_monitor_service = EnergymonitorService()
+        energy_monitor_service = self.__create_energymonitor_service()
         energy_monitor_service.start = MagicMock()
         server = Server(LightswitchService(), energy_monitor_service)
 
@@ -74,7 +74,7 @@ class ServerTest(unittest.TestCase):
 
     def test_energy_monitor_stop(self):
         # given
-        energy_monitor_service = EnergymonitorService()
+        energy_monitor_service = self.__create_energymonitor_service()
         energy_monitor_service.stop = MagicMock()
         server = Server(LightswitchService(), energy_monitor_service)
 
@@ -84,6 +84,10 @@ class ServerTest(unittest.TestCase):
         # then
         assert response.status_code == 200
         energy_monitor_service.stop.assert_called()
+
+    def __create_energymonitor_service(self):
+        return EnergymonitorService(None, None, None, None)
+
 
 if __name__ == '__main__':
     unittest.main()
