@@ -59,6 +59,19 @@ class ServerTest(unittest.TestCase):
         assert response.status_code == 200
         lightswitch_service.off.assert_called()
 
+    def test_energymonitor_status(self):
+        # given
+        energymonitor_service = self.__create_energymonitor_service()
+        energymonitor_service.status = MagicMock()
+        server = Server(self.__create_lightswitch_service(), energymonitor_service)
+
+        # when
+        response = server.app.test_client().get('/energymonitor')
+
+        # then
+        assert response.status_code == 200
+        energymonitor_service.status.assert_called()
+
     def test_energy_monitor_start(self):
         # given
         energy_monitor_service = self.__create_energymonitor_service()

@@ -11,6 +11,9 @@ class EnergymonitorService:
         self.update_interval_in_seconds = update_interval_in_seconds
         self.__running = False
 
+    def status(self):
+        return self.__running
+
     def start(self):
         self.__running = True
         self.__periodic(self.__job)

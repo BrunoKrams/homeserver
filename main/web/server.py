@@ -18,8 +18,9 @@ class Server:
         self.app.add_url_rule('/lightswitch/on', 'lightswitch_on', self.__lightswitch_on, methods=['POST'])
         self.app.add_url_rule('/lightswitch/off', 'lightswitch_off', self.__lightswitch_off, methods=['POST'])
 
-        self.app.add_url_rule('/energymonitor/start', 'energymonitor_start', self.__energy_monitor_start, methods=['POST'])
-        self.app.add_url_rule('/energymonitor/stop', 'energymonitor_stop', self.__energy_monitor_stop, methods=['POST'])
+        self.app.add_url_rule('/energymonitor', 'energymonitor_status', self.__energymonitor_status, methods=['GET'])
+        self.app.add_url_rule('/energymonitor/start', 'energymonitor_start', self.__energymonitor_start, methods=['POST'])
+        self.app.add_url_rule('/energymonitor/stop', 'energymonitor_stop', self.__energymonitor_stop, methods=['POST'])
 
     def __index(self):
         return self.app.send_static_file("index.html")
@@ -36,11 +37,15 @@ class Server:
         self.lightswitch_service.off()
         return '', 200
 
-    def __energy_monitor_start(self):
+    def __energymonitor_status(self):
+        status = self.energymonitor_serivce.status()
+        return 'ON' if status else 'OFF', 200
+
+    def __energymonitor_start(self):
         self.energymonitor_serivce.start()
         return '', 200
 
-    def __energy_monitor_stop(self):
+    def __energymonitor_stop(self):
         self.energymonitor_serivce.stop()
         return '', 200
 
