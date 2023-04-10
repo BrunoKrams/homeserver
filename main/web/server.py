@@ -14,7 +14,7 @@ class Server:
 
         self.app.add_url_rule('/', 'index', self.__index, methods=['GET'])
 
-        self.app.add_url_rule('/lightswitch', 'lightswitch_status', self.__lightswitch_status_poll, methods=['GET'])
+        self.app.add_url_rule('/lightswitch', 'lightswitch_status', self.__lightswitch_status, methods=['GET'])
         self.app.add_url_rule('/lightswitch/on', 'lightswitch_on', self.__lightswitch_on, methods=['POST'])
         self.app.add_url_rule('/lightswitch/off', 'lightswitch_off', self.__lightswitch_off, methods=['POST'])
 
@@ -24,9 +24,9 @@ class Server:
     def __index(self):
         return self.app.send_static_file("index.html")
 
-    def __lightswitch_status_poll(self):
+    def __lightswitch_status(self):
         status = self.lightswitch_service.status()
-        return status, 200
+        return 'ON' if status else 'OFF', 200
 
     def __lightswitch_on(self):
         self.lightswitch_service.on()

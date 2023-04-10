@@ -1,6 +1,5 @@
 class LightswitchService:
 
-
     def __init__(self):
         self.is_on = self.status()
 
