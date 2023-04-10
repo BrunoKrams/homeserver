@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 
 from main.business.energymonitor.energymonitor_service import EnergymonitorService
 from main.business.lightswitch.lightswitch_service import LightswitchService
@@ -14,7 +14,7 @@ class Server:
 
         self.app.add_url_rule('/', 'index', self.__index, methods=['GET'])
 
-        self.app.add_url_rule('/lightswitch', 'lightswitch_status', self.__lightswitch_status, methods=['GET'])
+        self.app.add_url_rule('/lightswitch', 'lightswitch_status', self.__lightswitch_status_poll, methods=['GET'])
         self.app.add_url_rule('/lightswitch/on', 'lightswitch_on', self.__lightswitch_on, methods=['POST'])
         self.app.add_url_rule('/lightswitch/off', 'lightswitch_off', self.__lightswitch_off, methods=['POST'])
 
@@ -24,7 +24,7 @@ class Server:
     def __index(self):
         return self.app.send_static_file("index.html")
 
-    def __lightswitch_status(self):
+    def __lightswitch_status_poll(self, request:request):
         status = self.lightswitch_service.status()
         return status, 200
 
