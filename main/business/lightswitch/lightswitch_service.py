@@ -4,8 +4,7 @@ class LightswitchService:
         self.is_on = self.status()
 
     def status(self) -> bool:
-        print ("Called status")
-        return True
+        return self.is_on
 
     def on(self):
         self.is_on = True

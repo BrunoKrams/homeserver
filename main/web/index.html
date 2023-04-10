@@ -29,45 +29,6 @@
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
-<script type="text/javascript">
-var lightswitch = document.getElementById('flexSwitchLightswitch');
-lightswitch.addEventListener('click', function() {
-    if (lightswitch.checked) {
-        fetch('/lightswitch/off', {method: 'POST'});
-    } else {
-        fetch('/lightswitch/on', {method: 'POST'});
-    }
-});
-function updateLightswitchStatus() {
-  fetch('/lightswitch', {
-      method: 'GET'
-    })
-    .then((response) => response.text()
-      .then((text) => lightswitch.checked = text == 'ON')
-    );
-}
-updateLightSwitchStatus();
-setInterval(updateLightswitchStatus, 2000);
-
-
-var energymonitor = document.getElementById('flexSwitchEnergymonitor');
-energymonitor.addEventListener('click', function() {
-    if (energymonitor.checked) {
-        fetch('/energymonitor/start', {method: 'POST'});
-    } else {
-        fetch('/energymonitor/stop', {method: 'POST'});
-    }
-});
-function updateEnergymonitorStatus() {
-  fetch('/energymonitor', {
-      method: 'GET'
-    })
-    .then((response) => response.text()
-      .then((text) => energymonitor.checked = text == 'ON')
-    );
-}
-updateEnergymonitorStatus();
-setInterval(updateEnergymonitorStatus, 2000);
-</script>
+<script src="server.js" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>
