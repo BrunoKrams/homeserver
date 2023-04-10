@@ -1,4 +1,4 @@
-from flask import Flask, request
+from flask import Flask
 
 from main.business.energymonitor.energymonitor_service import EnergymonitorService
 from main.business.lightswitch.lightswitch_service import LightswitchService
@@ -24,7 +24,7 @@ class Server:
     def __index(self):
         return self.app.send_static_file("index.html")
 
-    def __lightswitch_status_poll(self, request:request):
+    def __lightswitch_status_poll(self):
         status = self.lightswitch_service.status()
         return status, 200
 
