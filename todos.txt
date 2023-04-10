@@ -1,0 +1,3 @@
+add favicon
+add long poll for energymonitor status
+add long poll for lightswitch status

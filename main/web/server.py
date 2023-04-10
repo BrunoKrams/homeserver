@@ -21,7 +21,6 @@ class Server:
         self.app.add_url_rule('/energymonitor/start', 'energymonitor_start', self.__energy_monitor_start, methods=['POST'])
         self.app.add_url_rule('/energymonitor/stop', 'energymonitor_stop', self.__energy_monitor_stop, methods=['POST'])
 
-
     def __index(self):
         return self.app.send_static_file("index.html")
 
