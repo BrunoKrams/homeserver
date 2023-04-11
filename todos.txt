@@ -1,3 +1,13 @@
 add favicon
-add long poll for energymonitor status
-add long poll for lightswitch status
+add long poll for energymonitor status (/)
+add long poll for lightswitch status (/)
+create start.sh and stop.sh
+start as service
+implement lightswitch
+increase font size
+use prod server
+
+ideas:
+encrypted communication
+fritzadapter caching of sessionid
+create real distribution
