@@ -1,13 +1,17 @@
+from main.business.lightswitch.logic import LightswitchAdapter
+
+
 class LightswitchService:
 
-    def __init__(self):
-        self.is_on = True
+    def __init__(self, lightswitch_adapter:LightswitchAdapter):
+        self.lightswitch_adapter = lightswitch_adapter
 
     def status(self) -> bool:
-        return self.is_on
+        return self.lightswitch_adapter.status()
 
     def on(self):
-        self.is_on = True
+        self.lightswitch_adapter.on()
 
     def off(self):
-        self.is_on = False
+        self.lightswitch_adapter.off()
+

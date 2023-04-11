@@ -8,6 +8,10 @@ from main.business.lightswitch.lightswitch_service import LightswitchService
 from main.web.server import Server
 
 ENERGY_MONITOR_UPDATE_INTERVAL_IN_SECOND = 2
+
+def create_lightswitch_service() -> LightswitchService:
+
+
 def create_energymonitor_service() -> EnergymonitorService:
     scheduler = sched.scheduler(time.time, time.sleep)
     return EnergymonitorService(FritzboxAdapter(), CommandLineDisplay(), scheduler, ENERGY_MONITOR_UPDATE_INTERVAL_IN_SECOND)
