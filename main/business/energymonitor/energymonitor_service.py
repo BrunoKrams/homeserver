@@ -1,13 +1,14 @@
 import sched
 
-from main.business.energymonitor.logic import DataAdapter, Display, MainCommand
+from main.business.energymonitor.logic import DataAdapter, Display
 
 
 class EnergymonitorService:
 
     def __init__(self, data_adapter: DataAdapter, display: Display, scheduler: sched.scheduler, update_interval_in_seconds: int):
+        self.data_adapter = data_adapter
+        self.display = display
         self.scheduler = scheduler
-        self.main_command = MainCommand(data_adapter, display)
         self.update_interval_in_seconds = update_interval_in_seconds
         self.__running = False
 
@@ -23,6 +24,7 @@ class EnergymonitorService:
         self.__running = False
         if self.scheduler and self.event:
             self.scheduler.cancel(self.event)
+        self.display.clear()
 
     def __periodic(self, action, actionargs=()):
         if self.__running:
@@ -30,4 +32,6 @@ class EnergymonitorService:
             action(*actionargs)
 
     def __job(self):
-        self.main_command.execute()
+        enery_in_mw = self.data_adapter.get_energy_in_mw()
+        self.display.update(enery_in_mw)
+

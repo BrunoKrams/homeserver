@@ -12,12 +12,10 @@ class Display(ABC):
     def update(self, energy_in_mw: int):
         pass
 
+    @abstractmethod
+    def clear(self):
+        pass
 
-class MainCommand:
-    def __init__(self, data_dapter: DataAdapter, display: Display):
-        self.data_adapter = data_dapter
-        self.display = display
 
-    def execute(self):
-        enery_in_mw = self.data_adapter.get_energy_in_mw()
-        self.display.update(enery_in_mw)
+
+

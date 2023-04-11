@@ -23,6 +23,9 @@ class MatrixDisplay(Display):
         energy_in_w  = energy_in_mw // 1000
         self.__show_message(str(energy_in_w))
 
+    def clear(self):
+        self.device.clear()
+
     def __textsize(self, txt):
         src = [c for ascii_code in txt for c in self.FONT[ord(ascii_code)]]
         return len(src)
