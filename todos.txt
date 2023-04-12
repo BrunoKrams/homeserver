@@ -2,7 +2,7 @@ add favicon
 add long poll for energymonitor status (/)
 add long poll for lightswitch status (/)
 start as service
-implement lightswitch
+implement lightswitch (/)
 increase font size
 use prod server
 
