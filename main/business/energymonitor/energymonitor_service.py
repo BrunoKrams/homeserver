@@ -9,7 +9,7 @@ class EnergymonitorService:
         self.data_adapter = data_adapter
         self.display = display
         self.scheduler = scheduler
-        self.updatef_interval_in_seconds = update_interval_in_seconds
+        self.update_interval_in_seconds = update_interval_in_seconds
         self.__running = False
 
     def status(self):

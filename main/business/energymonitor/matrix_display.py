@@ -1,4 +1,3 @@
-from luma.core.interface.serial import spi, noop
 from luma.core.legacy import text
 from luma.core.legacy.font import CP437_FONT
 from luma.core.render import canvas
@@ -15,9 +14,11 @@ class MatrixDisplay(Display):
     SCROLL_DELAY = 0.03
     Y_OFFSET = 1
 
-    def __init__(self):
-        serial = spi(port=0, device=0, gpio=noop())
-        self.device = max7219(serial, cascaded=4, block_orientation=-90, rotate=0, blocks_arranged_in_reverse_order=False)
+    def __init__(self, device:max7219):
+        self.device = device
+
+    def __del__(self):
+        self.device.clear()
 
     def update(self, energy_in_mw: int):
         energy_in_w  = energy_in_mw // 1000

@@ -1,7 +1,6 @@
 add favicon
 add long poll for energymonitor status (/)
 add long poll for lightswitch status (/)
-create start.sh and stop.sh
 start as service
 implement lightswitch
 increase font size
@@ -11,3 +10,4 @@ ideas:
 encrypted communication
 fritzadapter caching of sessionid
 create real distribution
+cleanup on exit (release GPIO and reset MatrixDisplay)
