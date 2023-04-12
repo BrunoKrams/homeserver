@@ -1,9 +1,9 @@
 var lightswitch = document.getElementById('flexSwitchLightswitch');
 lightswitch.addEventListener('click', function() {
     if (lightswitch.checked) {
-        fetch('/lightswitch/off', {method: 'POST'});
-    } else {
         fetch('/lightswitch/on', {method: 'POST'});
+    } else {
+        fetch('/lightswitch/off', {method: 'POST'});
     }
 });
 function updateLightswitchStatus() {
