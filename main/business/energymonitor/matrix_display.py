@@ -17,9 +17,6 @@ class MatrixDisplay(Display):
     def __init__(self, device:max7219):
         self.device = device
 
-    def __del__(self):
-        self.device.clear()
-
     def update(self, energy_in_mw: int):
         energy_in_w  = energy_in_mw // 1000
         self.__show_message(str(energy_in_w))

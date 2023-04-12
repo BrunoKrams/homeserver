@@ -9,17 +9,35 @@ from main.business.energymonitor.energymonitor_service import EnergymonitorServi
 from main.business.energymonitor.fritzbox_adapter import FritzboxAdapter
 from main.business.energymonitor.matrix_display import MatrixDisplay
 from main.business.lightswitch.lightswitch_service import LightswitchService
-from main.business.lightswitch.raspberry_lightswitch_adapter import RaspberryLightswitchAdapter
+from main.business.lightswitch.raspberry_lightswitch_adapter import RaspberryLightswitchAdapter, GpioPin
 from main.web.server import Server
 
 LIGHTSWITCH_GPIO_PIN = 18
 ENERGY_MONITOR_UPDATE_INTERVAL_IN_SECOND = 60
 
+class GpioPinImpl(GpioPin):
+
+    def __init__(self, pin: int):
+        self.pin = pin
+        GPIO.setmode(GPIO.BOARD)
+        GPIO.setup(pin, GPIO.OUT)
+
+    def __del__(self):
+        GPIO.cleanup()
+
+    def status(self) -> int:
+        return GPIO.input(self.pin)
+
+    def high(self):
+        GPIO.output(self.pin, GPIO.HIGH)
+
+    def low(self):
+        GPIO.output(self.pin, GPIO.LOW)
+
 
 def create_lightswitch_service() -> LightswitchService:
-    GPIO.setmode(GPIO.BOARD)
-    GPIO.setup(18, GPIO.OUT)
-    lightswitch_adapter = RaspberryLightswitchAdapter(GPIO, LIGHTSWITCH_GPIO_PIN)
+    gpio_pin = GpioPinImpl(LIGHTSWITCH_GPIO_PIN)
+    lightswitch_adapter = RaspberryLightswitchAdapter(gpio_pin)
     return LightswitchService(lightswitch_adapter)
 
 def create_energymonitor_service() -> EnergymonitorService:
