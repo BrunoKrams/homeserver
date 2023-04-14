@@ -16,11 +16,13 @@ class EnergymonitorService:
         return self.__running
 
     def start(self):
+        print('Energymonitor started')
         self.__running = True
         self.__periodic(self.__job)
         self.scheduler.run()
 
     def stop(self):
+        print('Energymonitor stopped')
         self.__running = False
         if self.scheduler and self.event:
             self.scheduler.cancel(self.event)

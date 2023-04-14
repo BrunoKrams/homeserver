@@ -10,8 +10,10 @@ class LightswitchService:
         return self.lightswitch_adapter.status()
 
     def on(self):
+        print('Light on')
         self.lightswitch_adapter.on()
 
     def off(self):
+        print('Light off')
         self.lightswitch_adapter.off()
 

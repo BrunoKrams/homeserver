@@ -4,6 +4,7 @@ import time
 import RPi.GPIO as GPIO
 from luma.core.interface.serial import spi, noop
 from luma.led_matrix.device import max7219
+from waitress import serve
 
 from main.business.energymonitor.energymonitor_service import EnergymonitorService
 from main.business.energymonitor.fritzbox_adapter import FritzboxAdapter
@@ -52,4 +53,4 @@ if __name__ == '__main__':
     energymonitor_service = create_energymonitor_service()
 
     server = Server(lightswitch_service, energymonitor_service)
-    server.run(host="192.168.178.51")
+    serve(server.app, host='192.168.178.51', port=5000)
