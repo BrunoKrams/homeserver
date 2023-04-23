@@ -99,7 +99,7 @@ class ServerTest(unittest.TestCase):
         energy_monitor_service.stop.assert_called()
 
     def __create_lightswitch_service(self):
-        return LightswitchService()
+        return LightswitchService(Mock())
 
     def __create_energymonitor_service(self):
         return EnergymonitorService(Mock(), Mock(), Mock(), Mock())
