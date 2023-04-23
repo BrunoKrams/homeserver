@@ -49,6 +49,8 @@ def create_energymonitor_service() -> EnergymonitorService:
 
 
 if __name__ == '__main__':
+    GPIO.setwarnings(False)
+
     lightswitch_service = create_lightswitch_service()
     energymonitor_service = create_energymonitor_service()
 
