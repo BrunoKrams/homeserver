@@ -17,6 +17,8 @@ class EnergymonitorService:
 
     def start(self):
         print('Energymonitor started')
+        if (self.__running == True):
+            return
         self.__running = True
         self.__periodic(self.__job)
         self.scheduler.run()
