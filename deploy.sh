@@ -9,4 +9,4 @@ ssh markus@homeserver "rm -rf $TARGET_DIRECTORY"
 
 rsync -r /home/markus/workspace/homeserver/main markus@homeserver:$TARGET_DIRECTORY
 
-#ssh markus@homeserver "cd $TARGET_DIRECTORY && nohup python3 -m main.app_prod_pi &"
+ssh markus@homeserver "cd $TARGET_DIRECTORY && nohup python3 -m main.app_prod_pi"
