@@ -9,11 +9,11 @@ from waitress import serve
 from main.business.energymonitor.energymonitor_service import EnergymonitorService
 from main.business.energymonitor.fritzbox_adapter import FritzboxAdapter
 from main.business.energymonitor.matrix_display import MatrixDisplay
-from main.business.lightswitch.lightswitch_service import LightswitchService
-from main.business.lightswitch.raspberry_lightswitch_adapter import RaspberryLightswitchAdapter, GpioPin
+from main.business.kitchenlight.kitchen_light_service import KitchenLightService
+from main.business.kitchenlight.raspberry_kitchen_light_adapter import RaspberryKitchenLightAdapter, GpioPin
 from main.web.server import Server
 
-LIGHTSWITCH_GPIO_PIN = 18
+KITCHEN_LIGHT_GPIO_PIN = 18
 ENERGY_MONITOR_UPDATE_INTERVAL_IN_SECOND = 60
 
 class GpioPinImpl(GpioPin):
@@ -36,10 +36,10 @@ class GpioPinImpl(GpioPin):
         GPIO.output(self.pin, GPIO.LOW)
 
 
-def create_lightswitch_service() -> LightswitchService:
-    gpio_pin = GpioPinImpl(LIGHTSWITCH_GPIO_PIN)
-    lightswitch_adapter = RaspberryLightswitchAdapter(gpio_pin)
-    return LightswitchService(lightswitch_adapter)
+def create_kitchen_light_service() -> KitchenLightService:
+    gpio_pin = GpioPinImpl(KITCHEN_LIGHT_GPIO_PIN)
+    kitchen_light_adapter = RaspberryKitchenLightAdapter(gpio_pin)
+    return KitchenLightService(kitchen_light_adapter)
 
 def create_energymonitor_service() -> EnergymonitorService:
     scheduler = sched.scheduler(time.time, time.sleep)
@@ -51,8 +51,8 @@ def create_energymonitor_service() -> EnergymonitorService:
 if __name__ == '__main__':
     GPIO.setwarnings(False)
 
-    lightswitch_service = create_lightswitch_service()
+    kitchen_light_service = create_kitchen_light_service()
     energymonitor_service = create_energymonitor_service()
 
-    server = Server(lightswitch_service, energymonitor_service)
+    server = Server(kitchen_light_service, energymonitor_service)
     serve(server.app, host='192.168.178.51', port=5000)

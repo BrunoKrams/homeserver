@@ -1,7 +1,7 @@
-from main.business.lightswitch.logic import LightswitchAdapter
+from main.business.kitchenlight.logic import KitchenLightAdapter
 
 
-class MockLightswitchAdapter(LightswitchAdapter):
+class MockKitchenLightAdapter(KitchenLightAdapter):
 
     def status(self):
         print("status called")

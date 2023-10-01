@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class LightswitchAdapter(ABC):
+class KitchenLightAdapter(ABC):
 
     @abstractmethod
     def status(self)->bool:
