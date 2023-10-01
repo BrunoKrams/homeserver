@@ -9,8 +9,8 @@ from waitress import serve
 from main.business.energymonitor.energymonitor_service import EnergymonitorService
 from main.business.energymonitor.fritzbox_adapter import FritzboxAdapter
 from main.business.energymonitor.matrix_display import MatrixDisplay
-from main.business.kitchenlight.kitchen_light_service import KitchenLightService
-from main.business.kitchenlight.raspberry_kitchen_light_adapter import RaspberryKitchenLightAdapter, GpioPin
+from main.business.lightswitch.lightswitch_service import LightSwitchService
+from main.business.lightswitch.raspberry_kitchen_light_adapter import RaspberryKitchenLightAdapter, GpioPin
 from main.web.server import Server
 
 KITCHEN_LIGHT_GPIO_PIN = 18
@@ -36,10 +36,10 @@ class GpioPinImpl(GpioPin):
         GPIO.output(self.pin, GPIO.LOW)
 
 
-def create_kitchen_light_service() -> KitchenLightService:
+def create_kitchen_light_service() -> LightSwitchService:
     gpio_pin = GpioPinImpl(KITCHEN_LIGHT_GPIO_PIN)
     kitchen_light_adapter = RaspberryKitchenLightAdapter(gpio_pin)
-    return KitchenLightService(kitchen_light_adapter)
+    return LightSwitchService(kitchen_light_adapter)
 
 def create_energymonitor_service() -> EnergymonitorService:
     scheduler = sched.scheduler(time.time, time.sleep)

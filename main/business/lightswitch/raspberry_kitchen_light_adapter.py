@@ -1,6 +1,6 @@
 from abc import abstractmethod, ABC
 
-from main.business.kitchenlight.logic import KitchenLightAdapter
+from main.business.lightswitch.logic import LightSwitchAdapter
 
 
 class GpioPin(ABC):
@@ -18,7 +18,7 @@ class GpioPin(ABC):
         pass
 
 
-class RaspberryKitchenLightAdapter(KitchenLightAdapter):
+class RaspberryKitchenLightAdapter(LightSwitchAdapter):
 
     def __init__(self, gpio_pin: GpioPin):
         self.gpio_pin = gpio_pin
