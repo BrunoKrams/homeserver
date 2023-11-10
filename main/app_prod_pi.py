@@ -11,6 +11,7 @@ from main.business.energymonitor.fritzbox_adapter import FritzboxAdapter
 from main.business.energymonitor.matrix_display import MatrixDisplay
 from main.business.lightswitch.lightswitch_service import LightSwitchService
 from main.business.lightswitch.raspberry_kitchen_light_adapter import RaspberryKitchenLightAdapter, GpioPin
+from main.business.print.print_service import PrintService
 from main.web.server import Server
 
 KITCHEN_LIGHT_GPIO_PIN = 18
@@ -47,12 +48,15 @@ def create_energymonitor_service() -> EnergymonitorService:
     device = max7219(serial, cascaded=4, block_orientation=-90, rotate=0, blocks_arranged_in_reverse_order=False)
     return EnergymonitorService(FritzboxAdapter(), MatrixDisplay(device), scheduler, ENERGY_MONITOR_UPDATE_INTERVAL_IN_SECOND)
 
+def create_print_service() -> PrintService:
+    return PrintService()
 
 if __name__ == '__main__':
     GPIO.setwarnings(False)
 
     kitchen_light_service = create_kitchen_light_service()
     energymonitor_service = create_energymonitor_service()
+    print_service = create_print_service()
 
-    server = Server(kitchen_light_service, energymonitor_service)
+    server = Server(kitchen_light_service, energymonitor_service, print_service)
     serve(server.app, host='192.168.178.51', port=5000)

@@ -2,13 +2,14 @@ from flask import Flask
 
 from main.business.energymonitor.energymonitor_service import EnergymonitorService
 from main.business.lightswitch.lightswitch_service import LightSwitchService
-
+from main.business.print.print_service import PrintService
 
 class Server:
 
-    def __init__(self, kitchen_light_service: LightSwitchService, energymonitor_service: EnergymonitorService):
+    def __init__(self, kitchen_light_service: LightSwitchService, energymonitor_service: EnergymonitorService, print_service: PrintService):
         self.kitchen_light_service = kitchen_light_service
         self.energymonitor_serivce = energymonitor_service
+        self.print_service = print_service
 
         self.app = Flask(__name__, static_url_path='', static_folder='')
 
@@ -21,6 +22,8 @@ class Server:
         self.app.add_url_rule('/energymonitor', 'energymonitor_status', self.__energymonitor_status, methods=['GET'])
         self.app.add_url_rule('/energymonitor/start', 'energymonitor_start', self.__energymonitor_start, methods=['POST'])
         self.app.add_url_rule('/energymonitor/stop', 'energymonitor_stop', self.__energymonitor_stop, methods=['POST'])
+
+        self.app.add_url_rule('/print', 'print', self.__print, methods=['POST'])
 
     def __index(self):
         return self.app.send_static_file("index.html")
@@ -47,6 +50,9 @@ class Server:
 
     def __energymonitor_stop(self):
         self.energymonitor_serivce.stop()
+        return '', 200
+
+    def __print(self):
         return '', 200
 
     def run(self, **kwargs):
