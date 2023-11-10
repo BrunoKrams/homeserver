@@ -25,7 +25,7 @@ class ServerTest(unittest.TestCase):
         # given
         kitchen_light_service = self.__create_kitchen_light_service()
         kitchen_light_service.status = MagicMock()
-        server = Server(self.__create_garage_light_service(), kitchen_light_service, self.__create_energymonitor_service())
+        server = Server(kitchen_light_service, self.__create_energymonitor_service())
 
         # when
         response = server.app.test_client().get('/kitchenlight')
@@ -38,7 +38,7 @@ class ServerTest(unittest.TestCase):
         # given
         kitchen_light_service = self.__create_kitchen_light_service()
         kitchen_light_service.on = MagicMock()
-        server = Server(self.__create_garage_light_service(), kitchen_light_service, self.__create_energymonitor_service())
+        server = Server(kitchen_light_service, self.__create_energymonitor_service())
 
         # when
         response = server.app.test_client().post('/kitchenlight/on')
@@ -51,7 +51,7 @@ class ServerTest(unittest.TestCase):
         # given
         kitchen_light_service = self.__create_kitchen_light_service()
         kitchen_light_service.off = MagicMock()
-        server = Server(self.__create_garage_light_service(), kitchen_light_service, self.__create_energymonitor_service())
+        server = Server(kitchen_light_service, self.__create_energymonitor_service())
 
         # when
         response = server.app.test_client().post('/kitchenlight/off')
@@ -64,7 +64,7 @@ class ServerTest(unittest.TestCase):
         # given
         energymonitor_service = self.__create_energymonitor_service()
         energymonitor_service.status = MagicMock()
-        server = Server(self.__create_garage_light_service(), self.__create_kitchen_light_service(), energymonitor_service)
+        server = Server(self.__create_kitchen_light_service(), energymonitor_service)
 
         # when
         response = server.app.test_client().get('/energymonitor')
@@ -77,7 +77,7 @@ class ServerTest(unittest.TestCase):
         # given
         energy_monitor_service = self.__create_energymonitor_service()
         energy_monitor_service.start = MagicMock()
-        server = Server(self.__create_garage_light_service(), self.__create_kitchen_light_service(), energy_monitor_service)
+        server = Server(self.__create_kitchen_light_service(), energy_monitor_service)
 
         # when
         response = server.app.test_client().post('/energymonitor/start')
@@ -90,7 +90,7 @@ class ServerTest(unittest.TestCase):
         # given
         energy_monitor_service = self.__create_energymonitor_service()
         energy_monitor_service.stop = MagicMock()
-        server = Server(self.__create_garage_light_service(), self.__create_kitchen_light_service(), energy_monitor_service)
+        server = Server(self.__create_kitchen_light_service(), energy_monitor_service)
 
         # when
         response = server.app.test_client().post('/energymonitor/stop')
