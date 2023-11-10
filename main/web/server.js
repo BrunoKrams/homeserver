@@ -1,23 +1,3 @@
-var garageLightSwitch = document.getElementById('flexGarageLightSwitch');
-garageLightSwitch.addEventListener('click', function() {
-    if (garageLightSwitch.checked) {
-        fetch('/garagelight/on', {method: 'POST'});
-    } else {
-        fetch('/garagelight/off', {method: 'POST'});
-    }
-});
-function updateGarageLightStatus() {
-  fetch('/garagelight', {
-      method: 'GET'
-    })
-    .then((response) => response.text()
-      .then((text) => garageLightSwitch.checked = text == 'ON')
-    );
-}
-updateGarageLightStatus();
-setInterval(updateGarageLightStatus, 2000);
-
-
 var kitchenLightSwitch = document.getElementById('flexKitchenLightSwitch');
 kitchenLightSwitch.addEventListener('click', function() {
     if (kitchenLightSwitch.checked) {
