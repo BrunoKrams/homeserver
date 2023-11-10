@@ -102,13 +102,16 @@ class ServerTest(unittest.TestCase):
 
     def test_print(self):
         # given
-        server = Server(self.__create_kitchen_light_service(), self.__create_energymonitor_service(), self.__create_print_service())
+        print_service = self.__create_print_service()
+        print_service.print = MagicMock()
+        server = Server(self.__create_kitchen_light_service(), self.__create_energymonitor_service(), print_service)
 
         # when
         response = server.app.test_client().post('/print')
 
         # then
         assert response.status_code == 200
+        print_service.print.assert_called()
 
     def __create_kitchen_light_service(self):
         return LightSwitchService(Mock())
@@ -117,7 +120,7 @@ class ServerTest(unittest.TestCase):
         return EnergymonitorService(Mock(), Mock(), Mock(), Mock())
 
     def __create_print_service(self):  #
-        return PrintService()
+        return PrintService(Mock())
 
 
 if __name__ == '__main__':

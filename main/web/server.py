@@ -53,6 +53,7 @@ class Server:
         return '', 200
 
     def __print(self):
+        self.print_service.print()
         return '', 200
 
     def run(self, **kwargs):
