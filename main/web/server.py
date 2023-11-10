@@ -6,18 +6,13 @@ from main.business.lightswitch.lightswitch_service import LightSwitchService
 
 class Server:
 
-    def __init__(self, garage_light_service: LightSwitchService, kitchen_light_service: LightSwitchService, energymonitor_service: EnergymonitorService):
-        self.garage_light_service = garage_light_service
+    def __init__(self, kitchen_light_service: LightSwitchService, energymonitor_service: EnergymonitorService):
         self.kitchen_light_service = kitchen_light_service
         self.energymonitor_serivce = energymonitor_service
 
         self.app = Flask(__name__, static_url_path='', static_folder='')
 
         self.app.add_url_rule('/', 'index', self.__index, methods=['GET'])
-
-        self.app.add_url_rule('/garagelight', 'garage_light_status', self.__garage_light_status, methods=['GET'])
-        self.app.add_url_rule('/garagelight/on', 'garage_light_on', self.__garage_light_on, methods=['POST'])
-        self.app.add_url_rule('/garagelight/off', 'garage_light_off', self.__garage_light_off, methods=['POST'])
 
         self.app.add_url_rule('/kitchenlight', 'kitchen_light_status', self.__kitchen_light_status, methods=['GET'])
         self.app.add_url_rule('/kitchenlight/on', 'kitchen_light_on', self.__kitchen_light_on, methods=['POST'])
@@ -29,18 +24,6 @@ class Server:
 
     def __index(self):
         return self.app.send_static_file("index.html")
-
-    def __garage_light_status(self):
-        status = self.garage_light_service.status()
-        return 'ON' if status else 'OFF', 200
-
-    def __garage_light_on(self):
-        self.garage_light_service.on()
-        return '', 200
-
-    def __garage_light_off(self):
-        self.garage_light_service.off()
-        return '', 200
 
     def __kitchen_light_status(self):
         status = self.kitchen_light_service.status()

@@ -5,7 +5,6 @@ from main.business.energymonitor.command_line_display import CommandLineDisplay
 from main.business.energymonitor.energymonitor_service import EnergymonitorService
 from main.business.energymonitor.fritzbox_adapter import FritzboxAdapter
 from main.business.lightswitch.lightswitch_service import LightSwitchService
-from main.business.garagelight.mock_light_switch_adapter import MockLightSwitchAdapter
 from main.web.server import Server
 
 ENERGY_MONITOR_UPDATE_INTERVAL_IN_SECOND = 2
