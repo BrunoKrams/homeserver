@@ -1,3 +1,7 @@
+import os
+import tempfile
+import uuid
+
 from flask import Flask, request
 
 from main.business.energymonitor.energymonitor_service import EnergymonitorService
@@ -56,11 +60,13 @@ class Server:
         if len(request.files) != 1:
             return 'Please provide exactly one file', 400
 
-        file = next(iter(request.files.values()))
-        if not file.filename.endswith('pdf'):
+        file_storage = next(iter(request.files.values()))
+        if not file_storage.filename.endswith('pdf'):
             return 'Please provide a valid pdf file', 400
 
-        self.print_service.print(file)
+        file_path = os.path.join(tempfile.gettempdir(),str(uuid.uuid4()) + '.pdf')
+        file_storage.save(file_path)
+        self.print_service.print(file_path)
         return '', 200
 
     def run(self, **kwargs):

@@ -6,8 +6,8 @@ from main.business.print.logic import PrintAdapter
 
 class CupsPrintAdapter(PrintAdapter):
 
-    def print(self, file_path):
-        subprocess.run("lp", file_path)
+    def print(self, file):
+        subprocess.run(["lp", file])
 
 
 
