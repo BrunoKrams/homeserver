@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, request
 
 from main.business.energymonitor.energymonitor_service import EnergymonitorService
 from main.business.lightswitch.lightswitch_service import LightSwitchService
@@ -53,7 +53,14 @@ class Server:
         return '', 200
 
     def __print(self):
-        self.print_service.print()
+        if len(request.files) != 1:
+            return 'Please provide exactly one file', 400
+
+        file = next(iter(request.files.values()))
+        if not file.filename.endswith('pdf'):
+            return 'Please provide a valid pdf file', 400
+
+        self.print_service.print(file)
         return '', 200
 
     def run(self, **kwargs):

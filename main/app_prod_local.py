@@ -7,6 +7,7 @@ from main.business.print.print_service import PrintService
 from main.business.energymonitor.fritzbox_adapter import FritzboxAdapter
 from main.business.lightswitch.lightswitch_service import LightSwitchService
 from main.business.lightswitch.mock_light_switch_adapter import MockLightSwitchAdapter
+from main.business.print.mock_print_adapter import MockPrintAdapter
 from main.web.server import Server
 
 from waitress import serve
@@ -20,7 +21,7 @@ def create_energymonitor_service() -> EnergymonitorService:
     return EnergymonitorService(FritzboxAdapter(), CommandLineDisplay(), scheduler, ENERGY_MONITOR_UPDATE_INTERVAL_IN_SECOND)
 
 def create_print_service() -> PrintService:
-    return PrintService()
+    return PrintService(MockPrintAdapter())
 
 if __name__ == '__main__':
     kitchen_light_service = create_kitchen_light_service()

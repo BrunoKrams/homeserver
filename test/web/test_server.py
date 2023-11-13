@@ -106,12 +106,48 @@ class ServerTest(unittest.TestCase):
         print_service.print = MagicMock()
         server = Server(self.__create_kitchen_light_service(), self.__create_energymonitor_service(), print_service)
 
+        pdf_file_name = "test.pdf"
+        pdf_file = open(pdf_file_name, "rb")
+        data = {"file": pdf_file}
+
         # when
-        response = server.app.test_client().post('/print')
+        response = server.app.test_client().post('/print', data=data, content_type="multipart/form-data")
 
         # then
         assert response.status_code == 200
         print_service.print.assert_called()
+
+    def test_print_no_file(self):
+        # given
+        print_service = self.__create_print_service()
+        print_service.print = MagicMock()
+        server = Server(self.__create_kitchen_light_service(), self.__create_energymonitor_service(), print_service)
+
+        # when
+        response = server.app.test_client().post('/print')
+
+        # then
+        assert response.status_code == 400
+        assert response.text == 'Please provide exactly one file'
+        print_service.print.assert_not_called()
+
+    def test_print_wrong_extension(self):
+        # given
+        print_service = self.__create_print_service()
+        print_service.print = MagicMock()
+        server = Server(self.__create_kitchen_light_service(), self.__create_energymonitor_service(), print_service)
+
+        txt_file_name = "test.txt"
+        txt_file = open(txt_file_name, "rb")
+        data = {"file": txt_file}
+
+        # when
+        response = server.app.test_client().post('/print', data=data, content_type="multipart/form-data")
+
+        # then
+        assert response.status_code == 400
+        assert response.text == 'Please provide a valid pdf file'
+        print_service.print.assert_not_called()
 
     def __create_kitchen_light_service(self):
         return LightSwitchService(Mock())
