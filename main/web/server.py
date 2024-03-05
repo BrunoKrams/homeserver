@@ -17,10 +17,13 @@ class Server:
         self.app.add_url_rule('/kitchenlight', 'kitchen_light_status', self.__kitchen_light_status, methods=['GET'])
         self.app.add_url_rule('/kitchenlight/on', 'kitchen_light_on', self.__kitchen_light_on, methods=['POST'])
         self.app.add_url_rule('/kitchenlight/off', 'kitchen_light_off', self.__kitchen_light_off, methods=['POST'])
+        self.app.add_url_rule('/kitchenlight/switch', 'kitchen_light_switch', self.__kitchen_light_switch, methods=['POST'])
 
         self.app.add_url_rule('/energymonitor', 'energymonitor_status', self.__energymonitor_status, methods=['GET'])
         self.app.add_url_rule('/energymonitor/start', 'energymonitor_start', self.__energymonitor_start, methods=['POST'])
         self.app.add_url_rule('/energymonitor/stop', 'energymonitor_stop', self.__energymonitor_stop, methods=['POST'])
+        self.app.add_url_rule('/energymonitor/switch', 'energymonitor_switch', self.__energymonitor_switch, methods=['POST'])
+
 
     def __index(self):
         return self.app.send_static_file("index.html")
@@ -37,6 +40,10 @@ class Server:
         self.kitchen_light_service.off()
         return '', 200
 
+    def __kitchen_light_switch(self):
+        self.kitchen_light_service.switch()
+        return '', 200
+
     def __energymonitor_status(self):
         status = self.energymonitor_serivce.status()
         return 'ON' if status else 'OFF', 200
@@ -47,6 +54,10 @@ class Server:
 
     def __energymonitor_stop(self):
         self.energymonitor_serivce.stop()
+        return '', 200
+
+    def __energymonitor_switch(self):
+        self.energymonitor_serivce.switch()
         return '', 200
 
     def run(self, **kwargs):

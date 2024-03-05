@@ -30,6 +30,13 @@ class EnergymonitorService:
             self.scheduler.cancel(self.event)
         self.display.clear()
 
+    def switch(self):
+        print('Energymonitor switched')
+        if self.__running:
+            self.stop()
+        else:
+            self.start()
+
     def __periodic(self, action, actionargs=()):
         if self.__running:
             self.event = self.scheduler.enter(self.update_interval_in_seconds, 1, self.__periodic, (action, actionargs))

@@ -17,3 +17,10 @@ class LightSwitchService:
         print('Light off')
         self.light_switch_adapter.off()
 
+    def switch(self):
+        print('Light switched')
+        if self.status():
+            self.off()
+        else:
+            self.on()
+

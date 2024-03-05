@@ -60,6 +60,19 @@ class ServerTest(unittest.TestCase):
         assert response.status_code == 200
         kitchen_light_service.off.assert_called()
 
+    def test_kitchen_light_switch(self):
+        # given
+        kitchen_light_service = self.__create_kitchen_light_service()
+        kitchen_light_service.switch = MagicMock()
+        server = Server(kitchen_light_service, self.__create_energymonitor_service())
+
+        # when
+        response = server.app.test_client().post('/kitchenlight/switch')
+
+        # then
+        assert response.status_code == 200
+        kitchen_light_service.switch.assert_called()
+
     def test_energymonitor_status(self):
         # given
         energymonitor_service = self.__create_energymonitor_service()
@@ -98,6 +111,19 @@ class ServerTest(unittest.TestCase):
         # then
         assert response.status_code == 200
         energy_monitor_service.stop.assert_called()
+
+    def test_energy_monitor_switch(self):
+        # given
+        energy_monitor_service = self.__create_energymonitor_service()
+        energy_monitor_service.switch = MagicMock()
+        server = Server(self.__create_kitchen_light_service(), energy_monitor_service)
+
+        # when
+        response = server.app.test_client().post('/energymonitor/switch')
+
+        # then
+        assert response.status_code == 200
+        energy_monitor_service.switch.assert_called()
 
     def __create_kitchen_light_service(self):
         return LightSwitchService(Mock())
