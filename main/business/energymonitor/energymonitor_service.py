@@ -12,7 +12,7 @@ class EnergymonitorService:
         self.update_interval_in_seconds = update_interval_in_seconds
         self.__running = False
 
-    def status(self):
+    def status(self) -> bool:
         return self.__running
 
     def start(self):
@@ -30,7 +30,7 @@ class EnergymonitorService:
             self.scheduler.cancel(self.event)
         self.display.clear()
 
-    def switch(self):
+    def switch(self) -> bool:
         print('Energymonitor switched')
         if self.__running:
             self.stop()
