@@ -36,6 +36,7 @@ class EnergymonitorService:
             self.stop()
         else:
             self.start()
+        return self.status()
 
     def __periodic(self, action, actionargs=()):
         if self.__running:

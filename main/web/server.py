@@ -6,6 +6,9 @@ from main.business.lightswitch.lightswitch_service import LightSwitchService
 
 class Server:
 
+    ON = 'ON'
+    OFF = 'OFF'
+
     def __init__(self, kitchen_light_service: LightSwitchService, energymonitor_service: EnergymonitorService):
         self.kitchen_light_service = kitchen_light_service
         self.energymonitor_serivce = energymonitor_service
@@ -30,7 +33,7 @@ class Server:
 
     def __kitchen_light_status(self):
         status = self.kitchen_light_service.status()
-        return 'ON' if status else 'OFF', 200
+        return self.ON if status else self.OFF, 200
 
     def __kitchen_light_on(self):
         self.kitchen_light_service.on()
@@ -41,12 +44,12 @@ class Server:
         return '', 200
 
     def __kitchen_light_switch(self):
-        self.kitchen_light_service.switch()
-        return '', 200
+        status = self.kitchen_light_service.switch()
+        return self.ON if status else self.OFF, 200
 
     def __energymonitor_status(self):
         status = self.energymonitor_serivce.status()
-        return 'ON' if status else 'OFF', 200
+        return self.ON if status else self.OFF, 200
 
     def __energymonitor_start(self):
         self.energymonitor_serivce.start()
@@ -57,8 +60,8 @@ class Server:
         return '', 200
 
     def __energymonitor_switch(self):
-        self.energymonitor_serivce.switch()
-        return '', 200
+        status = self.energymonitor_serivce.switch()
+        return self.ON if status else self.OFF, 200
 
     def run(self, **kwargs):
         self.app.run(**kwargs)
