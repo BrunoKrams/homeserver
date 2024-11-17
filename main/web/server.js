@@ -1,4 +1,4 @@
-var kitchenLightSwitch = document.getElementById('flexKitchenLightSwitch');
+var kitchenLightSwitch = document.getElementById('kitchenLightSwitch');
 kitchenLightSwitch.addEventListener('click', function() {
     if (kitchenLightSwitch.checked) {
         fetch('/kitchenlight/on', {method: 'POST'});
@@ -18,7 +18,27 @@ updateKitchenLightStatus();
 setInterval(updateKitchenLightStatus, 2000);
 
 
-var energymonitor = document.getElementById('flexEnergymonitorSwitch');
+var kitchenCounterLightSwitch = document.getElementById('kitchenCounterLightSwitch');
+kitchenCounterLightSwitch.addEventListener('click', function() {
+    if (kitchenCounterLightSwitch.checked) {
+        fetch('/kitchencounterlight/on', {method: 'POST'});
+    } else {
+        fetch('/kitchencounterlight/off', {method: 'POST'});
+    }
+});
+function updateKitchenCounterLightStatus() {
+  fetch('/kitchencounterlight', {
+      method: 'GET'
+    })
+    .then((response) => response.text()
+      .then((text) => kitchenCounterLightSwitch.checked = text == 'ON')
+    );
+}
+updateKitchenCounterLightStatus();
+setInterval(updateKitchenCounterLightStatus, 2000);
+
+
+var energymonitor = document.getElementById('energymonitorSwitch');
 energymonitor.addEventListener('click', function() {
     if (energymonitor.checked) {
         fetch('/energymonitor/start', {method: 'POST'});

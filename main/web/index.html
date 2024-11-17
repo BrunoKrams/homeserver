@@ -2,33 +2,40 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Homeserver</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.dark.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Toggle Switches Example</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-<div class="row d-flex justify-content-center m-3">
-    <div class="col-md-10">
-        <h1 class="text-center">Homeserver</h1>
-        <hr class="hr"/>
-        <div class="row mt-5">
-            <div class="form-group form-check form-switch form-inline">
-                <label class="form-check-label h2" for="flexKitchenLightswitch">Küchenlampe</label>
-                <input class="form-check-input" type="checkbox" role="switch" id="flexKitchenLightSwitch"/>
-            </div>
-        </div>
-        <div class="row mt-5">
-            <div class="form-group form-check form-switch form-inline">
-                <label class="form-check-label h2" for="flexEnergymonitorSwitch">Monitor Balkonkraftwerk</label>
-                <input class="form-check-input" type="checkbox" role="switch" id="flexEnergymonitorSwitch"/>
-            </div>
-        </div>
+
+<div class="container">
+    <div class="switch-container">
+        <label for="kitchenLightSwitch">Küchenlampe (Fenster)</label>
+        <label class="switch">
+            <input type="checkbox" id="kitchenLightSwitch">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="switch-container">
+        <label for="kitchenCounterLightSwitch">Küchenlampe (Theke)</label>
+        <label class="switch">
+            <input type="checkbox" id="kitchenCounterLightSwitch">
+            <span class="slider"></span>
+        </label>
+    </div>
+
+    <div class="switch-container">
+        <label for="energymonitorSwitch">Monitor Balkonkraftwerk</label>
+        <label class="switch">
+            <input type="checkbox" id="energymonitorSwitch">
+            <span class="slider"></span>
+        </label>
     </div>
 </div>
-<div class="container">
 
-</div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.2.0/mdb.min.js"></script>
 <script src="server.js" type="text/javascript" charset="UTF-8"></script>
 </body>
 </html>
+
