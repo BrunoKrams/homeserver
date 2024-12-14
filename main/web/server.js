@@ -38,6 +38,26 @@ updateKitchenCounterLightStatus();
 setInterval(updateKitchenCounterLightStatus, 2000);
 
 
+var garageLightSwitch = document.getElementById('garageLightSwitch');
+garageLightSwitch.addEventListener('click', function() {
+    if (garageLightSwitch.checked) {
+        fetch('/garagelight/on', {method: 'POST'});
+    } else {
+        fetch('/garagelight/off', {method: 'POST'});
+    }
+});
+function updateGarageLightStatus() {
+  fetch('/garagelight', {
+      method: 'GET'
+    })
+    .then((response) => response.text()
+      .then((text) => garageLightSwitch.checked = text == 'ON')
+    );
+}
+updateGarageLightStatus();
+setInterval(updateGarageLightStatus, 2000);
+
+
 var energymonitor = document.getElementById('energymonitorSwitch');
 energymonitor.addEventListener('click', function() {
     if (energymonitor.checked) {

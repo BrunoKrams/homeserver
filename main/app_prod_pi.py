@@ -18,7 +18,7 @@ KITCHEN_LIGHT_GPIO_PIN = 18
 ENERGY_MONITOR_UPDATE_INTERVAL_IN_SECOND = 60
 HOMESERVER_IP = '192.168.178.51'
 SHELLY_KITCHEN_COUNTER_RELAIS_IP = '192.168.178.105'
-
+SHELLY_GARAGE_LIGHT_RELAIS_IP='192.168.178.106'
 
 class GpioPinImpl(GpioPin):
 
@@ -49,6 +49,9 @@ def create_kitchen_light_service() -> LightSwitchService:
 def create_kitchen_counter_light_service() -> LightSwitchService:
     return LightSwitchService(ShellyLightSwitchAdapter(SHELLY_KITCHEN_COUNTER_RELAIS_IP))
 
+def create_garage_light_service() -> LightSwitchService:
+    return LightSwitchService(ShellyLightSwitchAdapter(SHELLY_GARAGE_LIGHT_RELAIS_IP))
+
 
 def create_energymonitor_service() -> EnergymonitorService:
     scheduler = sched.scheduler(time.time, time.sleep)
@@ -63,7 +66,8 @@ if __name__ == '__main__':
 
     kitchen_light_service = create_kitchen_light_service()
     kitchen_counter_light_service = create_kitchen_counter_light_service()
+    garage_light_service = create_garage_light_service()
     energymonitor_service = create_energymonitor_service()
 
-    server = Server(kitchen_light_service, kitchen_counter_light_service, energymonitor_service)
+    server = Server(kitchen_light_service, kitchen_counter_light_service, garage_light_service, energymonitor_service)
     serve(server.app, host=HOMESERVER_IP, port=5000)

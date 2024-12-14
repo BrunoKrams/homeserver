@@ -10,7 +10,8 @@ class ServerTest(unittest.TestCase):
 
     def test_index(self):
         # given
-        server = Server(self.__create_kitchen_light_service(), self.__create_energymonitor_service())
+        server = Server(self.__create_mock_light_service(), self.__create_mock_light_service(),
+                        self.__create_mock_light_service(), self.__create_energymonitor_service())
 
         # when
         response = server.app.test_client().get('/')
@@ -20,12 +21,12 @@ class ServerTest(unittest.TestCase):
         assert "html" in response.data.decode('utf-8')
         response.close()
 
-
     def test_kitchen_light_status(self):
         # given
-        kitchen_light_service = self.__create_kitchen_light_service()
+        kitchen_light_service = self.__create_mock_light_service()
         kitchen_light_service.status = MagicMock()
-        server = Server(kitchen_light_service, self.__create_energymonitor_service())
+        server = Server(kitchen_light_service, self.__create_mock_light_service(), self.__create_mock_light_service(),
+                        self.__create_energymonitor_service())
 
         # when
         response = server.app.test_client().get('/kitchenlight')
@@ -36,9 +37,10 @@ class ServerTest(unittest.TestCase):
 
     def test_kitchen_light_on(self):
         # given
-        kitchen_light_service = self.__create_kitchen_light_service()
+        kitchen_light_service = self.__create_mock_light_service()
         kitchen_light_service.on = MagicMock()
-        server = Server(kitchen_light_service, self.__create_energymonitor_service())
+        server = Server(kitchen_light_service, self.__create_mock_light_service(), self.__create_mock_light_service(),
+                        self.__create_energymonitor_service())
 
         # when
         response = server.app.test_client().post('/kitchenlight/on')
@@ -49,9 +51,10 @@ class ServerTest(unittest.TestCase):
 
     def test_kitchen_light_off(self):
         # given
-        kitchen_light_service = self.__create_kitchen_light_service()
+        kitchen_light_service = self.__create_mock_light_service()
         kitchen_light_service.off = MagicMock()
-        server = Server(kitchen_light_service, self.__create_energymonitor_service())
+        server = Server(kitchen_light_service, self.__create_mock_light_service(), self.__create_mock_light_service(),
+                        self.__create_energymonitor_service())
 
         # when
         response = server.app.test_client().post('/kitchenlight/off')
@@ -64,7 +67,8 @@ class ServerTest(unittest.TestCase):
         # given
         energymonitor_service = self.__create_energymonitor_service()
         energymonitor_service.status = MagicMock()
-        server = Server(self.__create_kitchen_light_service(), energymonitor_service)
+        server = Server(self.__create_mock_light_service(), self.__create_mock_light_service(),
+                        self.__create_mock_light_service(), energymonitor_service)
 
         # when
         response = server.app.test_client().get('/energymonitor')
@@ -77,7 +81,8 @@ class ServerTest(unittest.TestCase):
         # given
         energy_monitor_service = self.__create_energymonitor_service()
         energy_monitor_service.start = MagicMock()
-        server = Server(self.__create_kitchen_light_service(), energy_monitor_service)
+        server = Server(self.__create_mock_light_service(), self.__create_mock_light_service(),
+                        self.__create_mock_light_service(), energy_monitor_service)
 
         # when
         response = server.app.test_client().post('/energymonitor/start')
@@ -90,7 +95,8 @@ class ServerTest(unittest.TestCase):
         # given
         energy_monitor_service = self.__create_energymonitor_service()
         energy_monitor_service.stop = MagicMock()
-        server = Server(self.__create_kitchen_light_service(), energy_monitor_service)
+        server = Server(self.__create_mock_light_service(), self.__create_mock_light_service(),
+                        self.__create_mock_light_service(), energy_monitor_service)
 
         # when
         response = server.app.test_client().post('/energymonitor/stop')
@@ -99,7 +105,7 @@ class ServerTest(unittest.TestCase):
         assert response.status_code == 200
         energy_monitor_service.stop.assert_called()
 
-    def __create_kitchen_light_service(self):
+    def __create_mock_light_service(self):
         return LightSwitchService(Mock())
 
     def __create_energymonitor_service(self):
