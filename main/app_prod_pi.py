@@ -19,7 +19,6 @@ SHELLY_KITCHEN_COUNTER_RELAIS_IP = '192.168.178.105'
 SHELLY_KITCHEN_WINDOW_RELAIS_IP='192.168.178.108'
 SHELLY_GARAGE_LIGHT_RELAIS_IP='192.168.178.106'
 
-
 def create_kitchen_light_service() -> LightSwitchService:
     return LightSwitchService(ShellyLightSwitchAdapter(SHELLY_KITCHEN_WINDOW_RELAIS_IP))
 
@@ -28,7 +27,6 @@ def create_kitchen_counter_light_service() -> LightSwitchService:
 
 def create_garage_light_service() -> LightSwitchService:
     return LightSwitchService(ShellyLightSwitchAdapter(SHELLY_GARAGE_LIGHT_RELAIS_IP))
-
 
 def create_energymonitor_service() -> EnergymonitorService:
     scheduler = sched.scheduler(time.time, time.sleep)
