@@ -13,10 +13,11 @@ from waitress import serve
 
 ENERGY_MONITOR_UPDATE_INTERVAL_IN_SECOND = 2
 SHELLY_KITCHEN_COUNTER_RELAIS_IP='192.168.178.105'
+SHELLY_KITCHEN_WINDOW_RELAIS_IP='192.168.178.108'
 SHELLY_GARAGE_LIGHT_RELAIS_IP='192.168.178.106'
 
 def create_kitchen_light_service() -> LightSwitchService:
-    return LightSwitchService(MockLightSwitchAdapter())
+    return LightSwitchService(ShellyLightSwitchAdapter(SHELLY_KITCHEN_WINDOW_RELAIS_IP))
 
 def create_kitchen_counter_light_service() -> LightSwitchService:
     return LightSwitchService(ShellyLightSwitchAdapter(SHELLY_KITCHEN_COUNTER_RELAIS_IP))
